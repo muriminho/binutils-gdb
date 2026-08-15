@@ -168,6 +168,12 @@ TARGET32_LIBOPCODES_CFILES = \
 	iq2000-opc.c \
 	kvx-opc.c \
 	kvx-dis.c \
+	leg-asm.c \
+	leg-desc.c \
+	leg-dis.c \
+	leg-ibld.c \
+	leg-opc.c \
+	leg-opinst.c \
 	lm32-asm.c \
 	lm32-desc.c \
 	lm32-dis.c \
@@ -327,7 +333,7 @@ po/POTFILES.in: @MAINT@ Makefile
 	  && mv tmp $(srcdir)/po/POTFILES.in
 
 CLEANFILES = \
-	stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k stamp-iq2000 stamp-lm32 \
+	stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k stamp-iq2000 stamp-leg stamp-lm32 \
 	stamp-m32c stamp-m32r stamp-mep stamp-mt stamp-or1k stamp-xstormy16 \
 	libopcodes.a stamp-lib
 
@@ -354,6 +360,7 @@ FR30_DEPS = stamp-fr30
 FRV_DEPS = stamp-frv
 IP2K_DEPS = stamp-ip2k
 IQ2000_DEPS = stamp-iq2000
+LEG_DEPS = stamp-leg
 LM32_DEPS = stamp-lm32
 M32C_DEPS = stamp-m32c
 M32R_DEPS = stamp-m32r
@@ -368,6 +375,7 @@ FR30_DEPS =
 FRV_DEPS =
 IP2K_DEPS =
 IQ2000_DEPS =
+LEG_DEPS =
 LM32_DEPS =
 M32C_DEPS =
 M32R_DEPS =
@@ -439,6 +447,14 @@ stamp-iq2000: $(CGENDEPS) $(CPUDIR)/iq2000.cpu \
 	$(MAKE) run-cgen arch=iq2000 prefix=iq2000 options= \
 		archfile=$(CPUDIR)/iq2000.cpu \
 		opcfile=$(CPUDIR)/iq2000.opc extrafiles=
+
+$(srcdir)leg-desc.h $(srcdir)/leg-desc.c $(srcdir)/leg-opc.h $(srcdir)/leg-opc.c $(srcdir)/leg-ibld.c $(srcdir)/leg-opinst.c $(srcdir)/leg-asm.c $(srcdir)/leg-dis.c: $(LEG_DEPS)
+	@true
+stamp-leg: $(CGENDEPS) $(CPUDIR)/leg.cpu $(CPUDIR)/leg.opc
+	$(MAKE) run-cgen arch=leg prefix=leg options=opinst \
+		archfile=$(CPUDIR)/leg.cpu \
+		opcfile=$(CPUDIR)/leg.opc \
+		extrafiles=opinst
 
 $(srcdir)lm32-desc.h $(srcdir)/lm32-desc.c $(srcdir)/lm32-opc.h $(srcdir)/lm32-opc.c $(srcdir)/lm32-ibld.c $(srcdir)/lm32-opinst.c $(srcdir)/lm32-asm.c $(srcdir)/lm32-dis.c: $(LM32_DEPS)
 	@true

@@ -770,6 +770,7 @@ extern const bfd_target ip2k_elf32_vec;
 extern const bfd_target iq2000_elf32_vec;
 extern const bfd_target kvx_elf32_vec;
 extern const bfd_target kvx_elf64_vec;
+extern const bfd_target leg_elf32_vec;
 extern const bfd_target lm32_elf32_vec;
 extern const bfd_target lm32_elf32_fdpic_vec;
 extern const bfd_target loongarch_elf64_vec;
@@ -1131,6 +1132,7 @@ static const bfd_target * const _bfd_target_vector[] =
 	&kvx_elf64_vec,
 #endif
 
+	&leg_elf32_vec,
 	&lm32_elf32_vec,
 
 	&m32c_elf32_vec,
@@ -1449,7 +1451,7 @@ const bfd_target *const *const bfd_associated_vector = _bfd_associated_vector;
    number of entries that the array could possibly need.  */
 const size_t _bfd_target_vector_entries = ARRAY_SIZE (_bfd_target_vector);
 
-
+
 /* This array maps configuration triplets onto BFD vectors.  */
 
 struct targmatch

@@ -92,7 +92,7 @@ typedef struct
   unsigned short version;
 
 } elf_symbol_type;
-
+
 struct elf_strtab_hash;
 struct got_entry;
 struct plt_entry;
@@ -565,6 +565,7 @@ enum elf_target_id
   IA64_ELF_DATA,
   KVX_ELF_DATA,
   LARCH_ELF_DATA,
+  LEG_ELF_DATA,
   LM32_ELF_DATA,
   M32R_ELF_DATA,
   M68HC11_ELF_DATA,
@@ -834,7 +835,7 @@ elf_hash_table_id (const struct elf_link_hash_table *table)
 {
   return table->hash_table_id;
 }
-
+
 /* Constant information held for an ELF backend.  */
 
 struct elf_size_info {
@@ -2339,7 +2340,7 @@ struct elf_obj_tdata
   (elf_tdata(bfd) -> has_no_copy_on_protected)
 #define elf_has_indirect_extern_access(bfd) \
   (elf_tdata(bfd) -> has_indirect_extern_access)
-
+
 extern void _bfd_elf_swap_verdef_in
   (bfd *, const Elf_External_Verdef *, Elf_Internal_Verdef *) ATTRIBUTE_HIDDEN;
 extern void _bfd_elf_swap_verdef_out

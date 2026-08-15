@@ -1,0 +1,144 @@
+; Lattice Mico32 CPU description.  -*- Scheme -*-
+; Copyright 2008-2013  Free Software Foundation, Inc.
+; Contributed by Jon Beniston <jon@beniston.com>
+;
+; This file is part of the GNU Binutils.
+;
+; This program is free software; you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation; either version 3 of the License, or
+; (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
+; MA 02110-1301, USA.
+
+(include "simplify.inc")
+
+(define-arch
+  (name leg) ; name of cpu family
+  (comment "Lattice Mico32")
+  (default-alignment aligned)
+  (insn-lsb0? #t)
+  (machs leg)
+  (isas leg)
+)
+
+
+; Instruction sets.
+
+(define-isa
+  (name leg)
+  (comment "Leg ISA")
+  (default-insn-word-bitsize 64)
+  (default-insn-bitsize 64)
+  (base-insn-bitsize 64)
+  (decode-assist (7 6 5 4 3 2 1 0))
+)
+
+
+; Cpu family definitions.
+
+(define-cpu
+  ; cpu names must be distinct from the architecture name and machine name
+  (name legbf)
+  (comment "Leg CPU")
+  (endian little)
+  (word-bitsize 64)
+)
+
+(define-mach
+  (name leg)
+  (comment "Leg MACH")
+  (cpu legbf)
+)
+
+(define-model
+  (name leg)
+  (comment "Leg implementation")
+  (mach leg)
+  (unit u-exec "Execution unit" ()
+    1 1 () () () ())
+) 
+
+
+; Hardware elements.
+
+(dnh h-pc "Program counter" (PC) (pc) () () ())
+
+(dnh h-gr "General purpose registers"
+  ()
+  (register DI (64))
+  (keyword "" ( 
+               (r0 0) (r1 1) (r2 2) (r3 3)
+               (r4 4) (r5 5) (r6 6) (r7 7)
+               (r8 8) (r9 9) (r10 10) (r11 11)
+               (r12 12) (r13 13) (r14 14) (r15 15)
+              )
+  )
+  () ()
+)
+  
+(dnh h-csr "Control and status registers"
+  ()
+  (register SI (32))
+  (keyword "" (
+               (IE 0) (IM 1) (IP 2) 
+               (ICC 3) (DCC 4)
+               (CC 5)
+               (CFG 6)
+               (EBA 7)
+               (DC 8)
+               (DEBA 9)
+	       (CFG2 10)
+               (JTX 14) (JRX 15)          
+               (BP0 16) (BP1 17) (BP2 18) (BP3 19)
+               (WP0 24) (WP1 25) (WP2 26) (WP3 27)     
+               (PSW 29) (TLBVADDR 30) (TLBPADDR 31) (TLBBADVADDR 31)
+              )
+  )
+  () ()
+)              
+
+; Instruction fields.
+
+(dnf f-opcode   "opcode field"                ()   0  8)
+(dnf f-dest       "register index 0 field"      () 7  8)
+(dnf f-src1       "register index 1 field"      () 15  8)
+(dnf f-src2       "register index 2 field"      () 23  8)
+(dnf f-imm      "signed immediate field"      ()   31 32)
+(dnf f-uimm     "unsigned immediate field"    ()   31 32)
+(dnf f-branch     "branch offset field"    ()      31 32)
+
+; Operands.
+
+(dnop dest      "destinatination register 0"   () h-gr         f-dest)
+(dnop src1      "source register 1"            () h-gr         f-src1)
+(dnop src2      "source register 2"            () h-gr         f-src2)
+(dnop imm       "signed immediate"             () h-sint       f-imm)
+(dnop uimm      "unsigned immediate"           () h-uint       f-uimm)
+(dnop branch    "branch offset"                () h-iaddr      f-branch)            
+
+; Enumerations.
+
+(define-normal-insn-enum
+  opcodes "opcodes" () OP_ f-opcode
+  (("NOP"       0)      
+  )
+)
+ 
+
+; Instructions. Note: Reg-reg must come before reg-imm.
+
+(dni nop "no fucking operation." ()
+        "nop"
+        (+ OP_NOP (f-dest 0) (f-src1 0) (f-src2 0) (f-imm 0))
+        (nop)
+        ()
+)

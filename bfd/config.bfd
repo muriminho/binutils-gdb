@@ -676,6 +676,12 @@ case "${targ}" in
     ;;
 #endif
 
+  leg-*-elf)
+    targ_defvec=leg_elf32_vec
+    targ_selvecs=leg_elf32_vec
+    ;;
+
+
   lm32-*-elf | lm32-*-rtems*)
     targ_defvec=lm32_elf32_vec
     targ_selvecs=lm32_elf32_fdpic_vec

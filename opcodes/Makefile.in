@@ -574,6 +574,12 @@ TARGET32_LIBOPCODES_CFILES = \
 	iq2000-opc.c \
 	kvx-opc.c \
 	kvx-dis.c \
+	leg-asm.c \
+	leg-desc.c \
+	leg-dis.c \
+	leg-ibld.c \
+	leg-opc.c \
+	leg-opinst.c \
 	lm32-asm.c \
 	lm32-desc.c \
 	lm32-dis.c \
@@ -701,7 +707,7 @@ noinst_LIBRARIES = libopcodes.a
 libopcodes_a_SOURCES = 
 POTFILES = $(HFILES) $(LIBOPCODES_CFILES)
 CLEANFILES = \
-	stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k stamp-iq2000 stamp-lm32 \
+	stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k stamp-iq2000 stamp-leg stamp-lm32 \
 	stamp-m32c stamp-m32r stamp-mep stamp-mt stamp-or1k stamp-xstormy16 \
 	libopcodes.a stamp-lib
 
@@ -730,6 +736,8 @@ CGEN_CPUS = cris epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt or1k xstorm
 @CGEN_MAINT_TRUE@IP2K_DEPS = stamp-ip2k
 @CGEN_MAINT_FALSE@IQ2000_DEPS = 
 @CGEN_MAINT_TRUE@IQ2000_DEPS = stamp-iq2000
+@CGEN_MAINT_FALSE@LEG_DEPS = 
+@CGEN_MAINT_TRUE@LEG_DEPS = stamp-leg
 @CGEN_MAINT_FALSE@LM32_DEPS = 
 @CGEN_MAINT_TRUE@LM32_DEPS = stamp-lm32
 @CGEN_MAINT_FALSE@M32C_DEPS = 
@@ -947,6 +955,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iq2000-opc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kvx-dis.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kvx-opc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/leg-asm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/leg-desc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/leg-dis.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/leg-ibld.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/leg-opc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/leg-opinst.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lm32-asm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lm32-desc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lm32-dis.Plo@am__quote@
@@ -1435,6 +1449,14 @@ stamp-iq2000: $(CGENDEPS) $(CPUDIR)/iq2000.cpu \
 	$(MAKE) run-cgen arch=iq2000 prefix=iq2000 options= \
 		archfile=$(CPUDIR)/iq2000.cpu \
 		opcfile=$(CPUDIR)/iq2000.opc extrafiles=
+
+$(srcdir)leg-desc.h $(srcdir)/leg-desc.c $(srcdir)/leg-opc.h $(srcdir)/leg-opc.c $(srcdir)/leg-ibld.c $(srcdir)/leg-opinst.c $(srcdir)/leg-asm.c $(srcdir)/leg-dis.c: $(LEG_DEPS)
+	@true
+stamp-leg: $(CGENDEPS) $(CPUDIR)/leg.cpu $(CPUDIR)/leg.opc
+	$(MAKE) run-cgen arch=leg prefix=leg options=opinst \
+		archfile=$(CPUDIR)/leg.cpu \
+		opcfile=$(CPUDIR)/leg.opc \
+		extrafiles=opinst
 
 $(srcdir)lm32-desc.h $(srcdir)/lm32-desc.c $(srcdir)/lm32-opc.h $(srcdir)/lm32-opc.c $(srcdir)/lm32-ibld.c $(srcdir)/lm32-opinst.c $(srcdir)/lm32-asm.c $(srcdir)/lm32-dis.c: $(LM32_DEPS)
 	@true

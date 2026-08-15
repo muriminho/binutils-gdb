@@ -122,6 +122,7 @@ ALL_MACHINES = \
 	cpu-ip2k.lo \
 	cpu-iq2000.lo \
 	cpu-kvx.lo \
+	cpu-leg.lo \
 	cpu-lm32.lo \
 	cpu-loongarch.lo \
 	cpu-m10200.lo \
@@ -205,6 +206,7 @@ ALL_MACHINES_CFILES = \
 	cpu-ip2k.c \
 	cpu-iq2000.c \
 	cpu-kvx.c \
+	cpu-leg.c \
 	cpu-lm32.c \
 	cpu-loongarch.c \
 	cpu-m10200.c \
@@ -317,6 +319,7 @@ BFD32_BACKENDS = \
 	elf32-i386.lo \
 	elf32-ip2k.lo \
 	elf32-iq2000.lo \
+	elf32-leg.lo \
 	elf32-lm32.lo \
 	elf32-m32c.lo \
 	elf32-m32r.lo \
@@ -452,6 +455,7 @@ BFD32_BACKENDS_CFILES = \
 	elf32-i386.c \
 	elf32-ip2k.c \
 	elf32-iq2000.c \
+	elf32-leg.c \
 	elf32-lm32.c \
 	elf32-m32c.c \
 	elf32-m32r.c \

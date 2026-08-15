@@ -253,7 +253,7 @@ _bfd_dummy_target (bfd *ignore_abfd ATTRIBUTE_UNUSED)
   bfd_set_error (bfd_error_wrong_format);
   return 0;
 }
-
+
 /* Allocate memory using malloc.  */
 
 #ifndef SSIZE_MAX
@@ -271,7 +271,7 @@ DESCRIPTION
 	Returns a pointer to an allocated block of memory that is at least
 	SIZE bytes long.  If SIZE is 0 then it will be treated as if it were
 	1.  If SIZE is too big then NULL will be returned.
-	
+
 	Returns NULL upon error and sets bfd_error.
 */
 void *
@@ -306,7 +306,7 @@ DESCRIPTION
 	Returns a pointer to an allocated block of memory that is at least
 	SIZE bytes long.  If SIZE is 0 then it will be treated as if it were
 	1.  If SIZE is too big then NULL will be returned.
-	
+
 	If MEM is not NULL then it must point to an allocated block of memory.
 	If this block is large enough then MEM may be used as the return
 	value for this function, but this is not guaranteed.
@@ -359,8 +359,8 @@ DESCRIPTION
 	bfd_error to be set.
 
 	If SIZE is too big then NULL will be returned and bfd_error will be
-	set. 
-	
+	set.
+
 	If MEM is not NULL then it must point to an allocated block of memory.
 	If this block is large enough then MEM may be used as the return
 	value for this function, but this is not guaranteed.
@@ -382,7 +382,7 @@ bfd_realloc_or_free (void *ptr, bfd_size_type size)
       free (ptr);
       return NULL;
     }
-      
+
   ret = bfd_realloc (ptr, size);
   if (ret == NULL)
     free (ptr);
@@ -401,7 +401,7 @@ DESCRIPTION
 	Returns a pointer to an allocated block of memory that is at least
 	SIZE bytes long.  If SIZE is 0 then it will be treated as if it were
 	1.  If SIZE is too big then NULL will be returned.
-	
+
 	Returns NULL upon error and sets bfd_error.
 
 	If NULL is not returned then the allocated block of memory will
@@ -520,7 +520,7 @@ bfd_write_bigendian_4byte_int (bfd *abfd, unsigned int i)
   return bfd_write (buffer, 4, abfd) == 4;
 }
 
-
+
 /** The do-it-yourself (byte) sex-change kit */
 
 /* The middle letter e.g. get<b>short indicates Big or Little endian
@@ -1038,7 +1038,7 @@ bfd_get_bits (const void *p, int bits, bool big_p)
 
   return data;
 }
-
+
 #ifdef USE_MMAP
 /* Allocate a page to track mmapped memory and return the page and
    the first entry.  Return NULL if mmap fails.  */

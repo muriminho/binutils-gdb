@@ -459,6 +459,8 @@
    architecture was derived.  */
 #define EM_CSKY_OLD		EM_MCORE
 
+#define EM_LEG 0x6666	/* Leg */
+
 /* See the above comment before you add a new EM_* value here.  */
 
 /* Values for e_version.  */

@@ -1769,7 +1769,9 @@ enum bfd_architecture
 #define bfd_mach_gbz80         8
 /* ASCII R800: successor with multiplication.  */
 #define bfd_mach_r800          11
-  bfd_arch_lm32,      /* Lattice Mico32.  */
+  bfd_arch_leg,      /* Leg.  */
+#define bfd_mach_leg           1
+  bfd_arch_lm32,      /* Latticez Mico32.  */
 #define bfd_mach_lm32          1
   bfd_arch_microblaze,/* Xilinx MicroBlaze.  */
   bfd_arch_kvx,        /* Kalray VLIW core of the MPPA processor family */

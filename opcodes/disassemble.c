@@ -58,6 +58,7 @@
 #define ARCH_ip2k
 #define ARCH_iq2000
 #define ARCH_kvx
+#define ARCH_leg
 #define ARCH_lm32
 #define ARCH_m32c
 #define ARCH_m32r
@@ -247,6 +248,11 @@ disassembler (enum bfd_architecture a,
 #ifdef ARCH_lm32
     case bfd_arch_lm32:
       disassemble = print_insn_lm32;
+      break;
+#endif
+#ifdef ARCH_leg
+    case bfd_arch_leg:
+      disassemble = print_insn_leg;
       break;
 #endif
 #ifdef ARCH_m32r

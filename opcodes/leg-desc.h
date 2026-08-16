@@ -64,7 +64,7 @@ extern "C" {
 
 /* Enum declaration for opcodes.  */
 typedef enum opcodes {
-  OP_NOP, OP_EXIT, OP_JUMP, OP_MOV
+  OP_NOP = 1, OP_EXIT = 2, OP_JUMP = 3, OP_MOV = 4
 } OPCODES;
 
 /* Attributes.  */

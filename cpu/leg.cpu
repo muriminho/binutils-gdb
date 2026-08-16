@@ -130,17 +130,17 @@
 (define-normal-insn-enum
   opcodes "opcodes" () OP_ f-opcode
   (
-        ("NOP"       0)
-        ("EXIT"       1)
-        ("JUMP"       2)
-        ("MOV"       3)
+        ("NOP"       1)
+        ("EXIT"       2)
+        ("JUMP"       3)
+        ("MOV"       4)
   )
 )
  
 
 ; Instructions. Note: Reg-reg must come before reg-imm.
 
-(dni nop "no fucking operation." ()
+(dni nop "no op" ()
         "nop"
         (+ OP_NOP (f-dest 0) (f-src1 0) (f-src2 0) (f-imm 0))
         (nop)

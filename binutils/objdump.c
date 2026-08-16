@@ -4222,7 +4222,7 @@ disassemble_data (bfd *abfd)
 				     bfd_get_mach (abfd), abfd);
   if (!aux.disassemble_fn)
     {
-      non_fatal (_("can't fucking disassemble for architecture %s\n"),
+      non_fatal (_("can't disassemble for architecture %s\n"),
 		 bfd_printable_arch_mach (bfd_get_arch (abfd), 0));
       exit_status = 1;
       goto out;

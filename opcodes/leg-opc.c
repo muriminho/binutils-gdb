@@ -77,25 +77,25 @@ static const CGEN_OPCODE leg_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, 0 } },
-    & ifmt_nop, { 0x0 }
+    & ifmt_nop, { 0x1 }
   },
 /* exit */
   {
     { 0, 0, 0, 0 },
     { { MNEM, 0 } },
-    & ifmt_nop, { 0x1 }
+    & ifmt_nop, { 0x2 }
   },
 /* jump $branch */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (BRANCH), 0 } },
-    & ifmt_jump, { 0x2 }
+    & ifmt_jump, { 0x3 }
   },
 /* mov $dest,$src1 */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (DEST), ',', OP (SRC1), 0 } },
-    & ifmt_mov, { 0x3 }
+    & ifmt_mov, { 0x4 }
   },
 };
 

@@ -63,7 +63,7 @@ extern "C" {
    "effective address" in m68k cpus).  Subexpressions are wip.
    At the second highest level are the insns themselves.  Above that are
    pseudo-insns, synthetic insns, and macros, if any.  */
-
+
 /* Lots of cpu's have a fixed insn size, or one which rarely changes,
    and it's generally easier to handle these by treating the insn as an
    integer type, rather than an array of characters.  So we allow targets
@@ -102,7 +102,7 @@ typedef struct cgen_insn CGEN_INSN;
 /* Opaque pointer version for use by external world.  */
 
 typedef struct cgen_cpu_desc *CGEN_CPU_DESC;
-
+
 /* Attributes.
    Attributes are used to describe various random things associated with
    an object (ifield, hardware, operand, insn, whatever) and are specified
@@ -191,7 +191,7 @@ typedef struct
   const CGEN_ATTR_ENTRY * dfault;
   const CGEN_ATTR_ENTRY * vals;
 } CGEN_ATTR_TABLE;
-
+
 /* Instruction set variants.  */
 
 typedef struct {
@@ -222,7 +222,7 @@ typedef struct {
   /* parameter from mach->cpu */
   unsigned int insn_chunk_bitsize;
 } CGEN_MACH;
-
+
 /* Parse result (also extraction result).
 
    The result of parsing an insn is stored here.
@@ -248,7 +248,7 @@ typedef struct cgen_fields CGEN_FIELDS;
    further optimizations.  */
 
 #define CGEN_FIELDS_BITSIZE(fields) ((fields)->length)
-
+
 /* Extraction support for variable length insn sets.  */
 
 /* When disassembling we don't know the number of bytes to read at the start.
@@ -269,7 +269,7 @@ typedef struct {
   /* Mask of bytes that are valid in INSN_BYTES.  */
   unsigned int valid;
 } CGEN_EXTRACT_INFO;
-
+
 /* Associated with each insn or expression is a set of "handlers" for
    performing operations like parsing, printing, etc.  These require a bfd_vma
    value to be passed around but we don't want all applications to need bfd.h.
@@ -357,7 +357,7 @@ struct cgen_opcode_handler
 {
   unsigned char parse, insert, extract, print;
 };
-
+
 /* Assembler interface.
 
    The interface to the assembler is intended to be clean in the sense that
@@ -419,7 +419,7 @@ extern void cgen_set_parse_operand_fn
 /* Called before trying to match a table entry with the insn.  */
 
 extern void cgen_init_parse_operand (CGEN_CPU_DESC);
-
+
 /* Operand values (keywords, integers, symbols, etc.)  */
 
 /* Types of assembler elements.  */
@@ -521,24 +521,24 @@ typedef struct cgen_keyword
 {
   /* Pointer to initial [compiled in] values.  */
   CGEN_KEYWORD_ENTRY *init_entries;
-  
+
   /* Number of entries in `init_entries'.  */
   unsigned int num_init_entries;
-  
+
   /* Hash table used for name lookup.  */
   CGEN_KEYWORD_ENTRY **name_hash_table;
-  
+
   /* Hash table used for value lookup.  */
   CGEN_KEYWORD_ENTRY **value_hash_table;
-  
+
   /* Number of entries in the hash_tables.  */
   unsigned int hash_table_size;
-  
+
   /* Pointer to null keyword "" entry if present.  */
   const CGEN_KEYWORD_ENTRY *null_entry;
 
   /* String containing non-alphanumeric characters used
-     in keywords.  
+     in keywords.
      At present, the highest number of entries used is 1.  */
   char nonalpha_chars[8];
 } CGEN_KEYWORD;
@@ -549,13 +549,13 @@ typedef struct
 {
   /* Table being searched.  */
   const CGEN_KEYWORD *table;
-  
+
   /* Specification of what is being searched for.  */
   const char *spec;
-  
+
   /* Current index in hash table.  */
   unsigned int current_hash;
-  
+
   /* Current element in current hash chain.  */
   CGEN_KEYWORD_ENTRY *current_entry;
 } CGEN_KEYWORD_SEARCH;
@@ -599,7 +599,7 @@ extern const char *cgen_validate_signed_integer
 extern const char *cgen_validate_unsigned_integer
   (unsigned long, unsigned long, unsigned long);
 #endif
-
+
 /* Operand modes.  */
 
 /* ??? This duplicates the values in arch.h.  Revisit.
@@ -620,7 +620,7 @@ enum cgen_mode {
 /* FIXME: Until simulator is updated.  */
 
 #define CGEN_MODE_VM CGEN_MODE_VOID
-
+
 /* Operands.  */
 
 #ifndef CGEN_ARCH
@@ -728,7 +728,7 @@ extern const CGEN_OPERAND * cgen_operand_lookup_by_name
   (CGEN_CPU_DESC, const char *);
 extern const CGEN_OPERAND * cgen_operand_lookup_by_num
   (CGEN_CPU_DESC, int);
-
+
 /* Instruction operand instances.
 
    For each instruction, a list of the hardware elements that are read and
@@ -776,7 +776,7 @@ typedef struct
 /* Operand is conditionally referenced (read/written).  */
 #define CGEN_OPINST_COND_REF 1
 } CGEN_OPINST;
-
+
 /* Syntax string.
 
    Each insn format and subexpression has one of these.
@@ -818,7 +818,7 @@ typedef struct
 
 #define CGEN_SYNTAX_MNEMONIC       1
 #define CGEN_SYNTAX_MNEMONIC_P(ch) ((ch) == CGEN_SYNTAX_MNEMONIC)
-
+
 /* Instruction fields.
 
    ??? We currently don't allow adding fields at run-time.
@@ -861,7 +861,7 @@ typedef struct cgen_ifld {
 /* Return value of attribute ATTR in IFLD.  */
 #define CGEN_IFLD_ATTR_VALUE(ifld, attr) \
 CGEN_ATTR_VALUE ((ifld), CGEN_IFLD_ATTRS (ifld), (attr))
-
+
 /* Instruction data.  */
 
 /* Instruction formats.
@@ -1119,7 +1119,7 @@ extern int cgen_macro_insn_count (CGEN_CPU_DESC);
    The "|1" is because the base mach is always selected.  */
 #define CGEN_INSN_MACH_HAS_P(insn, mach) \
 ((CGEN_INSN_ATTR_VALUE ((insn), CGEN_INSN_MACH) & ((1 << (mach)) | 1)) != 0)
-
+
 /* Macro instructions.
    Macro insns aren't real insns, they map to one or more real insns.
    E.g. An architecture's "nop" insn may actually be an "mv r0,r0" or
@@ -1172,7 +1172,7 @@ typedef struct cgen_minsn_expansion {
 extern const char * cgen_expand_macro_insn
   (CGEN_CPU_DESC, const struct cgen_minsn_expansion *,
    const char *, const char **, int *, CGEN_OPERAND **);
-
+
 /* The assembler insn table is hashed based on some function of the mnemonic
    (the actually hashing done is up to the target, but we provide a few
    examples like the first letter or a function of the entire mnemonic).  */
@@ -1190,7 +1190,7 @@ extern CGEN_INSN_LIST * cgen_dis_lookup_insn
 /* FIXME: delete these two */
 #define CGEN_DIS_LOOKUP_INSN(cd, buf, value) cgen_dis_lookup_insn ((cd), (buf), (value))
 #define CGEN_DIS_NEXT_INSN(insn) ((insn)->next)
-
+
 /* The CPU description.
    A copy of this is created when the cpu table is "opened".
    All global state information is recorded here.
@@ -1363,7 +1363,7 @@ typedef struct cgen_cpu_desc
 
   /* This field could be turned into a bitfield if room for other flags is needed.  */
   unsigned int signed_overflow_ok_p;
-       
+
 } CGEN_CPU_TABLE;
 
 /* wip */
@@ -1373,7 +1373,7 @@ typedef struct cgen_cpu_desc
 #ifndef CGEN_INSN_WORD_ENDIAN
 #define CGEN_INSN_WORD_ENDIAN(cd) CGEN_CPU_INSN_ENDIAN (cd)
 #endif
-
+
 /* Prototypes of major functions.  */
 /* FIXME: Move more CGEN_SYM-defined functions into CGEN_CPU_DESC.
    Not the init fns though, as that would drag in things that mightn't be
@@ -1464,7 +1464,7 @@ extern const CGEN_INSN * cgen_lookup_get_insn_operands
 extern CGEN_INSN_INT cgen_get_insn_value
   (CGEN_CPU_DESC, unsigned char *, int, int);
 extern void cgen_put_insn_value
-  (CGEN_CPU_DESC, unsigned char *, int, CGEN_INSN_INT, int);
+  (CGEN_CPU_DESC, unsigned char *, int, CGEN_INSN_LGUINT, int);
 
 extern CGEN_INSN_INT cgen_get_base_insn_value
   (CGEN_CPU_DESC, unsigned char *, int);

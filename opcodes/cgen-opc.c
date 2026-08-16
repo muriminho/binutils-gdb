@@ -252,7 +252,7 @@ build_keyword_hash_tables (CGEN_KEYWORD *kt)
   for (i = kt->num_init_entries - 1; i >= 0; --i)
     cgen_keyword_add (kt, &kt->init_entries[i]);
 }
-
+
 /* Hardware support.  */
 
 /* Lookup a hardware element by its name.
@@ -290,7 +290,7 @@ cgen_hw_lookup_by_num (CGEN_CPU_DESC cd, unsigned int hwnum)
 
   return NULL;
 }
-
+
 /* Operand support.  */
 
 /* Lookup an operand by its name.
@@ -321,7 +321,7 @@ cgen_operand_lookup_by_num (CGEN_CPU_DESC cd, int opnum)
 {
   return cd->operand_table.entries[opnum];
 }
-
+
 /* Instruction support.  */
 
 /* Return number of instructions.  This includes any added at runtime.  */
@@ -397,7 +397,7 @@ void
 cgen_put_insn_value (CGEN_CPU_DESC cd,
 		     unsigned char *buf,
 		     int length,
-		     CGEN_INSN_INT value,
+		     CGEN_INSN_LGUINT value,
                      int endian)
 {
   int big_p = (endian == CGEN_ENDIAN_BIG);
@@ -427,7 +427,7 @@ cgen_put_insn_value (CGEN_CPU_DESC cd,
       bfd_put_bits ((bfd_vma) value, buf, length, big_p);
     }
 }
-
+
 /* Look up instruction INSN_*_VALUE and extract its fields.
    INSN_INT_VALUE is used if CGEN_INT_INSN_P.
    Otherwise INSN_BYTES_VALUE is used.

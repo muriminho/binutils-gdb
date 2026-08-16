@@ -218,13 +218,13 @@ const CGEN_IFLD leg_cgen_ifld_table[] =
 {
   { LEG_F_NIL, "f-nil", 0, 0, 0, 0, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { LEG_F_ANYOF, "f-anyof", 0, 0, 0, 0, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { LEG_F_OPCODE, "f-opcode", 0, 64, 0, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { LEG_F_DEST, "f-dest", 0, 64, 7, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { LEG_F_SRC1, "f-src1", 0, 64, 15, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { LEG_F_SRC2, "f-src2", 0, 64, 23, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { LEG_F_IMM, "f-imm", 0, 64, 31, 32, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { LEG_F_UIMM, "f-uimm", 0, 64, 31, 32, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { LEG_F_BRANCH, "f-branch", 0, 64, 31, 32, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { LEG_F_OPCODE, "f-opcode", 0, 64, 7, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { LEG_F_DEST, "f-dest", 0, 64, 15, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { LEG_F_SRC1, "f-src1", 0, 64, 23, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { LEG_F_SRC2, "f-src2", 0, 64, 31, 8, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { LEG_F_IMM, "f-imm", 0, 64, 63, 32, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { LEG_F_UIMM, "f-uimm", 0, 64, 63, 32, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { LEG_F_BRANCH, "f-branch", 0, 64, 63, 32, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { 0, 0, 0, 0, 0, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } }
 };
 
@@ -251,27 +251,27 @@ const CGEN_OPERAND leg_cgen_operand_table[] =
     { 0, { &leg_cgen_ifld_table[LEG_F_NIL] } },
     { 0|A(SEM_ONLY), { { { (1<<MACH_BASE), 0 } } } }  },
 /* dest: destinatination register 0 */
-  { "dest", LEG_OPERAND_DEST, HW_H_GR, 7, 8,
+  { "dest", LEG_OPERAND_DEST, HW_H_GR, 15, 8,
     { 0, { &leg_cgen_ifld_table[LEG_F_DEST] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* src1: source register 1 */
-  { "src1", LEG_OPERAND_SRC1, HW_H_GR, 15, 8,
+  { "src1", LEG_OPERAND_SRC1, HW_H_GR, 23, 8,
     { 0, { &leg_cgen_ifld_table[LEG_F_SRC1] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* src2: source register 2 */
-  { "src2", LEG_OPERAND_SRC2, HW_H_GR, 23, 8,
+  { "src2", LEG_OPERAND_SRC2, HW_H_GR, 31, 8,
     { 0, { &leg_cgen_ifld_table[LEG_F_SRC2] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* imm: signed immediate */
-  { "imm", LEG_OPERAND_IMM, HW_H_SINT, 31, 32,
+  { "imm", LEG_OPERAND_IMM, HW_H_SINT, 63, 32,
     { 0, { &leg_cgen_ifld_table[LEG_F_IMM] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* uimm: unsigned immediate */
-  { "uimm", LEG_OPERAND_UIMM, HW_H_UINT, 31, 32,
+  { "uimm", LEG_OPERAND_UIMM, HW_H_UINT, 63, 32,
     { 0, { &leg_cgen_ifld_table[LEG_F_UIMM] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* branch: branch offset */
-  { "branch", LEG_OPERAND_BRANCH, HW_H_IADDR, 31, 32,
+  { "branch", LEG_OPERAND_BRANCH, HW_H_UINT, 63, 32,
     { 0, { &leg_cgen_ifld_table[LEG_F_BRANCH] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* sentinel */

@@ -579,22 +579,22 @@ leg_cgen_insert_operand (CGEN_CPU_DESC cd,
   switch (opindex)
     {
     case LEG_OPERAND_BRANCH :
-      errmsg = insert_normal (cd, fields->f_branch, 0, 0, 31, 32, 64, total_length, buffer);
+      errmsg = insert_normal (cd, fields->f_branch, 0, 0, 63, 32, 64, total_length, buffer);
       break;
     case LEG_OPERAND_DEST :
-      errmsg = insert_normal (cd, fields->f_dest, 0, 0, 7, 8, 64, total_length, buffer);
+      errmsg = insert_normal (cd, fields->f_dest, 0, 0, 15, 8, 64, total_length, buffer);
       break;
     case LEG_OPERAND_IMM :
-      errmsg = insert_normal (cd, fields->f_imm, 0, 0, 31, 32, 64, total_length, buffer);
+      errmsg = insert_normal (cd, fields->f_imm, 0, 0, 63, 32, 64, total_length, buffer);
       break;
     case LEG_OPERAND_SRC1 :
-      errmsg = insert_normal (cd, fields->f_src1, 0, 0, 15, 8, 64, total_length, buffer);
+      errmsg = insert_normal (cd, fields->f_src1, 0, 0, 23, 8, 64, total_length, buffer);
       break;
     case LEG_OPERAND_SRC2 :
-      errmsg = insert_normal (cd, fields->f_src2, 0, 0, 23, 8, 64, total_length, buffer);
+      errmsg = insert_normal (cd, fields->f_src2, 0, 0, 31, 8, 64, total_length, buffer);
       break;
     case LEG_OPERAND_UIMM :
-      errmsg = insert_normal (cd, fields->f_uimm, 0, 0, 31, 32, 64, total_length, buffer);
+      errmsg = insert_normal (cd, fields->f_uimm, 0, 0, 63, 32, 64, total_length, buffer);
       break;
 
     default :
@@ -641,22 +641,22 @@ leg_cgen_extract_operand (CGEN_CPU_DESC cd,
   switch (opindex)
     {
     case LEG_OPERAND_BRANCH :
-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 31, 32, 64, total_length, pc, & fields->f_branch);
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 63, 32, 64, total_length, pc, & fields->f_branch);
       break;
     case LEG_OPERAND_DEST :
-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 7, 8, 64, total_length, pc, & fields->f_dest);
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 15, 8, 64, total_length, pc, & fields->f_dest);
       break;
     case LEG_OPERAND_IMM :
-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 31, 32, 64, total_length, pc, & fields->f_imm);
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 63, 32, 64, total_length, pc, & fields->f_imm);
       break;
     case LEG_OPERAND_SRC1 :
-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 15, 8, 64, total_length, pc, & fields->f_src1);
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 23, 8, 64, total_length, pc, & fields->f_src1);
       break;
     case LEG_OPERAND_SRC2 :
-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 23, 8, 64, total_length, pc, & fields->f_src2);
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 31, 8, 64, total_length, pc, & fields->f_src2);
       break;
     case LEG_OPERAND_UIMM :
-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 31, 32, 64, total_length, pc, & fields->f_uimm);
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 63, 32, 64, total_length, pc, & fields->f_uimm);
       break;
 
     default :

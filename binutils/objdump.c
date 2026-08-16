@@ -253,7 +253,7 @@ typedef enum unicode_display_type
 } unicode_display_type;
 
 static unicode_display_type unicode_display = unicode_default;
-
+
 static void usage (FILE *, int) ATTRIBUTE_NORETURN;
 static void
 usage (FILE *stream, int status)
@@ -577,7 +577,7 @@ static struct option long_options[]=
   {"map-global-vars", no_argument, NULL, OPTION_MAP_GLOBAL_VARS},
   {NULL, no_argument, NULL, 0}
 };
-
+
 static void
 my_bfd_nonfatal (const char *msg)
 {
@@ -773,7 +773,7 @@ sanitize_string (const char * in)
   return buffer;
 }
 
-
+
 /* Returns TRUE if the specified section should be dumped.  */
 
 static bool
@@ -852,7 +852,7 @@ free_only_list (void)
     }
 }
 
-
+
 static void
 dump_section_header (bfd *abfd, asection *section, void *data)
 {
@@ -1018,7 +1018,7 @@ dump_headers (bfd *abfd)
   bfd_map_over_sections (abfd, dump_section_header,
 			 &max_section_name_length);
 }
-
+
 static asymbol **
 slurp_symtab (bfd *abfd)
 {
@@ -1681,7 +1681,7 @@ display_extra_syms (long place,
   for (; place < sorted_symcount; place++)
     {
       asymbol *sym = sorted_syms[place];
-		  
+
       if (bfd_asymbol_value (sym) != vma)
 	break;
 
@@ -1690,7 +1690,7 @@ display_extra_syms (long place,
 
       if (first && ! do_wide)
 	inf->fprintf_styled_func (inf->stream, dis_style_immediate, ",\n\t<");
-      else  
+      else
 	inf->fprintf_styled_func (inf->stream, dis_style_immediate, ", <");
 
       objdump_print_symname (aux->abfd, inf, sym);
@@ -1698,7 +1698,7 @@ display_extra_syms (long place,
       first = false;
     }
 }
-		    
+
 /* Print an address (VMA), symbolically if possible.
    If SKIP_ZEROES is TRUE, don't output leading zeroes.  */
 
@@ -1755,7 +1755,7 @@ objdump_print_addr (bfd_vma vma,
 
   if (place)
     display_extra_syms (place + 1, vma, inf);
-    
+
   /* If we found an absolute symbol in the reloc (ie: "*ABS*+0x....")
      and there is a valid symbol at the address contained in the absolute symbol
      then display any extra symbols that match this address.  This helps
@@ -4034,7 +4034,7 @@ disassemble_section (bfd *abfd, asection *section, void *inf)
 	      for (++place; place < sorted_symcount; place++)
 		{
 		  sym = sorted_syms[place];
-		  
+
 		  if (bfd_asymbol_value (sym) != addr)
 		    break;
 		  if (! pinfo->symbol_is_valid (sym, pinfo))
@@ -4045,7 +4045,7 @@ disassemble_section (bfd *abfd, asection *section, void *inf)
 		  objdump_print_addr_with_sym (abfd, section, sym, addr, pinfo, false);
 		  pinfo->fprintf_func (pinfo->stream, ":\n");
 		}
-	    }	   
+	    }
 	}
 
       if (sym != NULL && bfd_asymbol_value (sym) > addr)
@@ -4222,7 +4222,7 @@ disassemble_data (bfd *abfd)
 				     bfd_get_mach (abfd), abfd);
   if (!aux.disassemble_fn)
     {
-      non_fatal (_("can't disassemble for architecture %s\n"),
+      non_fatal (_("can't fucking disassemble for architecture %s\n"),
 		 bfd_printable_arch_mach (bfd_get_arch (abfd), 0));
       exit_status = 1;
       goto out;
@@ -4289,7 +4289,7 @@ disassemble_data (bfd *abfd)
       abfd->xvec = old_xvec;
     }
 }
-
+
 static bool
 load_specific_debug_section (enum dwarf_section_display_enum debug,
 			     asection *sec, void *file)
@@ -4608,7 +4608,7 @@ dump_global_vars_info (bfd *abfd, bool is_mainfile)
 {
   dump_dwarf_info (abfd, dump_global_variable_info, is_mainfile);
 }
-
+
 /* Read ABFD's section SECT_NAME into *CONTENTS, and return a pointer to
    the section.  Return NULL on failure.   */
 
@@ -4804,7 +4804,7 @@ dump_stabs (bfd *abfd)
 
   dump_stabs_section (abfd, "$GDB_SYMBOLS$", "$GDB_STRINGS$");
 }
-
+
 static void
 dump_bfd_header (bfd *abfd)
 {
@@ -4830,7 +4830,7 @@ dump_bfd_header (bfd *abfd)
   bfd_printf_vma (abfd, abfd->start_address);
   printf ("\n");
 }
-
+
 
 #ifdef ENABLE_LIBCTF
 /* Formatting callback function passed to ctf_dump.  Returns either the pointer
@@ -5071,7 +5071,7 @@ dump_sframe_section (bfd *abfd, const char *sect_name)
   debug_displays[sframe].display (section, abfd);
 }
 
-
+
 static void
 dump_bfd_private_header (bfd *abfd)
 {
@@ -5131,7 +5131,7 @@ dump_target_specific (bfd *abfd)
   /* Dump.  */
   (*desc)->dump (abfd);
 }
-
+
 /* Display a section in hexadecimal format with associated characters.
    Each line prefixed by the zero padded address.  */
 
@@ -5364,7 +5364,7 @@ dump_symbols (bfd *abfd ATTRIBUTE_UNUSED, bool dynamic)
     }
   printf ("\n\n");
 }
-
+
 static void
 dump_reloc_set (bfd *abfd, asection *sec, arelent **relpp, long relcount)
 {
@@ -5740,7 +5740,7 @@ might_need_separate_debug_info (bool is_mainfile)
      deliberate user action.  */
   if (DEFAULT_FOR_FOLLOW_LINKS == 0 && do_follow_links)
     return true;
-  
+
   if (process_links || dump_symtab || dump_debugging
       /* Disassembly benefits from symbol tables, which might
 	 be stored in the separate debug info file.  */
@@ -5748,7 +5748,7 @@ might_need_separate_debug_info (bool is_mainfile)
       || dump_dwarf_section_info || with_source_code)
     return true;
 
-  return false;  
+  return false;
 }
 
 /* Dump selected contents of ABFD.  */
@@ -6072,7 +6072,7 @@ display_file (char *filename, char *target)
 
   bfd_close (file);
 }
-
+
 int
 main (int argc, char **argv)
 {
@@ -6225,7 +6225,7 @@ main (int argc, char **argv)
 	    disassembler_color = on_if_terminal_output;
 	  else if (streq (optarg, "color")
 		   || streq (optarg, "colour")
-		   || streq (optarg, "on")) 
+		   || streq (optarg, "on"))
 	    disassembler_color = on;
 	  else if (streq (optarg, "extended")
 		   || streq (optarg, "extended-color")

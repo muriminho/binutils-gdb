@@ -47,15 +47,15 @@ static const CGEN_IFMT ifmt_empty ATTRIBUTE_UNUSED = {
 };
 
 static const CGEN_IFMT ifmt_nop ATTRIBUTE_UNUSED = {
-  64, 64, 0x100ffffff, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+  64, 64, 0xffffffffffffffff, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_jump ATTRIBUTE_UNUSED = {
-  64, 64, 0x1000000, { { F (F_BRANCH) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+  64, 64, 0xffffffff, { { F (F_BRANCH) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_mov ATTRIBUTE_UNUSED = {
-  64, 64, 0x100ff0000, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+  64, 64, 0xffffffffff0000ff, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
 };
 
 #undef F
@@ -83,19 +83,19 @@ static const CGEN_OPCODE leg_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, 0 } },
-    & ifmt_nop, { 0x0 }
+    & ifmt_nop, { 0x1 }
   },
 /* jump $branch */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (BRANCH), 0 } },
-    & ifmt_jump, { 0x0 }
+    & ifmt_jump, { 0x2 }
   },
 /* mov $dest,$src1 */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (DEST), ',', OP (SRC1), 0 } },
-    & ifmt_mov, { 0x0 }
+    & ifmt_mov, { 0x3 }
   },
 };
 

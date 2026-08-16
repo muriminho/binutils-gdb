@@ -48,7 +48,7 @@ typedef struct
   int num_fixups;
   fixS *fixups[GAS_CGEN_MAX_FIXUPS];
   int indices[MAX_OPERAND_INSTANCES];
-} lm32_insn;
+} leg_insn;
 
 /* Configuration options */
 
@@ -285,7 +285,7 @@ md_section_align (asection *seg, valueT addr)
 void
 md_assemble (char * str)
 {
-  lm32_insn insn;
+  leg_insn insn;
   char * errmsg;
 
   /* Initialize GAS's cgen interface for a new instruction.  */

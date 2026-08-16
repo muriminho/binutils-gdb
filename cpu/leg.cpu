@@ -108,13 +108,13 @@
 
 ; Instruction fields.
 
-(dnf f-opcode   "opcode field"                ()   0  8)
-(dnf f-dest       "register index 0 field"      () 7  8)
-(dnf f-src1       "register index 1 field"      () 15  8)
-(dnf f-src2       "register index 2 field"      () 23  8)
-(dnf f-imm      "signed immediate field"      ()   31 32)
-(dnf f-uimm     "unsigned immediate field"    ()   31 32)
-(dnf f-branch     "branch offset field"    ()      31 32)
+(dnf f-opcode   "opcode field"                ()   7  8)
+(dnf f-dest       "register index 0 field"      () 15  8)
+(dnf f-src1       "register index 1 field"      () 23  8)
+(dnf f-src2       "register index 2 field"      () 31  8)
+(dnf f-imm      "signed immediate field"      ()   63 32)
+(dnf f-uimm     "unsigned immediate field"    ()   63 32)
+(dnf f-branch     "branch offset field"    ()      63 32)
 
 ; Operands.
 
@@ -123,7 +123,7 @@
 (dnop src2      "source register 2"            () h-gr         f-src2)
 (dnop imm       "signed immediate"             () h-sint       f-imm)
 (dnop uimm      "unsigned immediate"           () h-uint       f-uimm)
-(dnop branch    "branch offset"                () h-iaddr      f-branch)            
+(dnop branch    "branch offset"                () h-uint      f-branch)            
 
 ; Enumerations.
 

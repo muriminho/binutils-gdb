@@ -472,12 +472,12 @@ lm32_info_to_howto_rela (bfd *abfd,
   return true;
 }
 
-/* Set the right machine number for an Lattice Mico32 ELF file. */
+/* Set the right machine number for LEG ELF file. */
 
 static bool
 lm32_elf_object_p (bfd *abfd)
 {
-  return bfd_default_set_arch_mach (abfd, bfd_arch_lm32, bfd_mach_lm32);
+  return bfd_default_set_arch_mach (abfd, bfd_arch_leg, bfd_mach_leg);
 }
 
 /* Set machine type flags just before file is written out. */

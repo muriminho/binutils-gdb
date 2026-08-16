@@ -299,6 +299,21 @@ static const CGEN_IBASE leg_cgen_insn_table[MAX_INSNS] =
     LEG_INSN_NOP, "nop", "nop", 64,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
+/* exit */
+  {
+    LEG_INSN_EXIT, "exit", "exit", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jump $branch */
+  {
+    LEG_INSN_JUMP, "jump", "jump", 64,
+    { 0|A(UNCOND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* mov $dest,$src1 */
+  {
+    LEG_INSN_MOV, "mov", "mov", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
 };
 
 #undef OP

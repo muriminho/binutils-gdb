@@ -41,14 +41,15 @@ extern "C" {
 /* -- asm.c */
 /* Enum declaration for leg instruction types.  */
 typedef enum cgen_insn_type {
-  LEG_INSN_INVALID, LEG_INSN_NOP
+  LEG_INSN_INVALID, LEG_INSN_NOP, LEG_INSN_EXIT, LEG_INSN_JUMP
+ , LEG_INSN_MOV
 } CGEN_INSN_TYPE;
 
 /* Index of `invalid' insn place holder.  */
 #define CGEN_INSN_INVALID LEG_INSN_INVALID
 
 /* Total number of insns in table.  */
-#define MAX_INSNS ((int) LEG_INSN_NOP + 1)
+#define MAX_INSNS ((int) LEG_INSN_MOV + 1)
 
 /* This struct records data prior to insertion or after extraction.  */
 struct cgen_fields

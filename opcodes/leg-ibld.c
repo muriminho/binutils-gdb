@@ -140,9 +140,6 @@ insert_normal (CGEN_CPU_DESC cd,
   /* Written this way to avoid undefined behaviour.  */
   mask = (1UL << (length - 1) << 1) - 1;
 
-  if (word_length > 8 * sizeof (CGEN_INSN_INT))
-    abort ();
-
   /* For architectures with insns smaller than the base-insn-bitsize,
      word_length may be too big.  */
   if (cd->min_insn_bitsize < cd->base_insn_bitsize)
@@ -208,6 +205,9 @@ insert_normal (CGEN_CPU_DESC cd,
     }
 
 #if CGEN_INT_INSN_P
+
+  if (word_length > 8 * sizeof (CGEN_INSN_INT))
+    abort ();
 
   {
     int shift_within_word, shift_to_word, shift;

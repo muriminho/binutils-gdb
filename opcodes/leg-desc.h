@@ -50,7 +50,7 @@ extern "C" {
 #define CGEN_INT_INSN_P 0
 
 /* Maximum number of syntax elements in an instruction.  */
-#define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 5
+#define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 9
 
 /* CGEN_MNEMONIC_OPERANDS is defined if mnemonics have operands.
    e.g. In "b,a foo" the ",a" is an operand.  If mnemonics have operands
@@ -64,7 +64,7 @@ extern "C" {
 
 /* Enum declaration for opcodes.  */
 typedef enum opcodes {
-  OP_NOP
+  OP_NOP, OP_EXIT, OP_JUMP, OP_MOV
 } OPCODES;
 
 /* Attributes.  */
@@ -175,7 +175,7 @@ typedef enum cgen_operand_type {
 #define MAX_OPERANDS 7
 
 /* Maximum number of operands referenced by any insn.  */
-#define MAX_OPERAND_INSTANCES 0
+#define MAX_OPERAND_INSTANCES 2
 
 /* Insn attribute indices.  */
 

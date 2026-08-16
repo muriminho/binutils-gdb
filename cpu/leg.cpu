@@ -23,7 +23,7 @@
 
 (define-arch
   (name leg) ; name of cpu family
-  (comment "Lattice Mico32")
+  (comment "LEG.")
   (default-alignment aligned)
   (insn-lsb0? #t)
   (machs leg)
@@ -129,7 +129,11 @@
 
 (define-normal-insn-enum
   opcodes "opcodes" () OP_ f-opcode
-  (("NOP"       0)      
+  (
+        ("NOP"       0)
+        ("EXIT"       1)
+        ("JUMP"       2)
+        ("MOV"       3)
   )
 )
  
@@ -140,5 +144,26 @@
         "nop"
         (+ OP_NOP (f-dest 0) (f-src1 0) (f-src2 0) (f-imm 0))
         (nop)
+        ()
+)
+
+(dni exit "exit vm" ()
+        "exit"
+        (+ OP_EXIT (f-dest 0) (f-src1 0) (f-src2 0) (f-imm 0))
+        (nop)
+        ()
+)
+
+(dni jump "jump to a 32 bit offset" ()
+        "jump $branch"
+        (+ OP_JUMP (f-dest 0) (f-src1 0) (f-src2 0) branch)
+        (set pc branch)
+        ()
+)
+
+(dni mov "mov to reg from reg" ()
+        "mov $dest,$src1"
+        (+ OP_MOV dest src1 (f-src2 0) (f-imm 0))
+        (set dest src1)
         ()
 )

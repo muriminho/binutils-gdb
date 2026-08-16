@@ -52,15 +52,15 @@ static const char * insert_insn_normal
   (CGEN_CPU_DESC, const CGEN_INSN *,
    CGEN_FIELDS *, CGEN_INSN_BYTES_PTR, bfd_vma);
 static int extract_normal
-  (CGEN_CPU_DESC, CGEN_EXTRACT_INFO *, CGEN_INSN_INT,
+  (CGEN_CPU_DESC, CGEN_EXTRACT_INFO *, CGEN_INSN_LGUINT,
    unsigned int, unsigned int, unsigned int, unsigned int,
    unsigned int, unsigned int, bfd_vma, long *);
 static int extract_insn_normal
   (CGEN_CPU_DESC, const CGEN_INSN *, CGEN_EXTRACT_INFO *,
-   CGEN_INSN_INT, CGEN_FIELDS *, bfd_vma);
+   CGEN_INSN_LGUINT, CGEN_FIELDS *, bfd_vma);
 #if CGEN_INT_INSN_P
 static void put_insn_int_value
-  (CGEN_CPU_DESC, CGEN_INSN_BYTES_PTR, int, int, CGEN_INSN_INT);
+  (CGEN_CPU_DESC, CGEN_INSN_BYTES_PTR, int, int, CGEN_INSN_LGUINT);
 #endif
 #if ! CGEN_INT_INSN_P
 static CGEN_INLINE void insert_1
@@ -140,6 +140,11 @@ insert_normal (CGEN_CPU_DESC cd,
   /* Written this way to avoid undefined behaviour.  */
   mask = (1UL << (length - 1) << 1) - 1;
 
+#if CGEN_INT_INSN_P
+  if (word_length > 8 * sizeof (CGEN_INSN_INT))
+    abort ();
+#endif
+
   /* For architectures with insns smaller than the base-insn-bitsize,
      word_length may be too big.  */
   if (cd->min_insn_bitsize < cd->base_insn_bitsize)
@@ -205,9 +210,6 @@ insert_normal (CGEN_CPU_DESC cd,
     }
 
 #if CGEN_INT_INSN_P
-
-  if (word_length > 8 * sizeof (CGEN_INSN_INT))
-    abort ();
 
   {
     int shift_within_word, shift_to_word, shift;
@@ -306,7 +308,7 @@ put_insn_int_value (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 		    CGEN_INSN_BYTES_PTR buf,
 		    int length,
 		    int insn_length,
-		    CGEN_INSN_INT value)
+		    CGEN_INSN_LGUINT value)
 {
   /* For architectures with insns smaller than the base-insn-bitsize,
      length may be too big.  */
@@ -316,7 +318,7 @@ put_insn_int_value (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
     {
       int shift = insn_length - length;
       /* Written this way to avoid undefined behaviour.  */
-      CGEN_INSN_INT mask = length == 0 ? 0 : (1UL << (length - 1) << 1) - 1;
+      CGEN_INSN_LGUINT mask = length == 0 ? 0 : (1UL << (length - 1) << 1) - 1;
 
       *buf = (*buf & ~(mask << shift)) | ((value & mask) << shift);
     }
@@ -427,7 +429,7 @@ extract_normal (CGEN_CPU_DESC cd,
 #else
 		CGEN_EXTRACT_INFO *ex_info ATTRIBUTE_UNUSED,
 #endif
-		CGEN_INSN_INT insn_value,
+		CGEN_INSN_LGUINT insn_value,
 		unsigned int attrs,
 		unsigned int word_offset,
 		unsigned int start,
@@ -451,8 +453,10 @@ extract_normal (CGEN_CPU_DESC cd,
       return 1;
     }
 
+#if CGEN_INT_INSN_P
   if (word_length > 8 * sizeof (CGEN_INSN_INT))
     abort ();
+#endif
 
   /* For architectures with insns smaller than the insn-base-bitsize,
      word_length may be too big.  */
@@ -478,8 +482,8 @@ extract_normal (CGEN_CPU_DESC cd,
     {
       unsigned char *bufp = ex_info->insn_bytes + word_offset / 8;
 
-      if (word_length > 8 * sizeof (CGEN_INSN_INT))
-	abort ();
+      /*if (word_length > 8 * sizeof (CGEN_INSN_INT))
+	abort ();*/
 
       if (fill_cache (cd, ex_info, word_offset / 8, word_length / 8, pc) == 0)
 	{
@@ -519,7 +523,7 @@ static int
 extract_insn_normal (CGEN_CPU_DESC cd,
 		     const CGEN_INSN *insn,
 		     CGEN_EXTRACT_INFO *ex_info,
-		     CGEN_INSN_INT insn_value,
+		     CGEN_INSN_LGUINT insn_value,
 		     CGEN_FIELDS *fields,
 		     bfd_vma pc)
 {
@@ -609,7 +613,7 @@ leg_cgen_insert_operand (CGEN_CPU_DESC cd,
 }
 
 int leg_cgen_extract_operand
-  (CGEN_CPU_DESC, int, CGEN_EXTRACT_INFO *, CGEN_INSN_INT, CGEN_FIELDS *, bfd_vma);
+  (CGEN_CPU_DESC, int, CGEN_EXTRACT_INFO *, CGEN_INSN_LGUINT, CGEN_FIELDS *, bfd_vma);
 
 /* Main entry point for operand extraction.
    The result is <= 0 for error, >0 for success.
@@ -630,7 +634,7 @@ int
 leg_cgen_extract_operand (CGEN_CPU_DESC cd,
 			     int opindex,
 			     CGEN_EXTRACT_INFO *ex_info,
-			     CGEN_INSN_INT insn_value,
+			     CGEN_INSN_LGUINT insn_value,
 			     CGEN_FIELDS * fields,
 			     bfd_vma pc)
 {

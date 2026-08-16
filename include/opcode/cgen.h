@@ -320,7 +320,7 @@ typedef const char * (cgen_insert_fn) ();
 #ifdef __BFD_H_SEEN__
 typedef int (cgen_extract_fn)
   (CGEN_CPU_DESC, const CGEN_INSN *insn_,
-   CGEN_EXTRACT_INFO *ex_info_, CGEN_INSN_INT base_insn_,
+   CGEN_EXTRACT_INFO *ex_info_, CGEN_INSN_LGUINT base_insn_,
    CGEN_FIELDS *fields_, bfd_vma pc_);
 #else
 typedef int (cgen_extract_fn) ();
@@ -928,7 +928,7 @@ typedef struct
 typedef struct
 {
   /* The opcode portion of the base insn.  */
-  CGEN_INSN_INT base_value;
+  CGEN_INSN_LGUINT base_value;
 
 #ifdef CGEN_MAX_EXTRA_OPCODE_OPERANDS
   /* Extra opcode values beyond base_value.  */
@@ -1186,7 +1186,7 @@ extern CGEN_INSN_LIST * cgen_asm_lookup_insn
    instruction (the actually hashing done is up to the target).  */
 
 extern CGEN_INSN_LIST * cgen_dis_lookup_insn
-  (CGEN_CPU_DESC, const char *, CGEN_INSN_INT);
+  (CGEN_CPU_DESC, const char *, CGEN_INSN_LGUINT);
 /* FIXME: delete these two */
 #define CGEN_DIS_LOOKUP_INSN(cd, buf, value) cgen_dis_lookup_insn ((cd), (buf), (value))
 #define CGEN_DIS_NEXT_INSN(insn) ((insn)->next)
@@ -1282,7 +1282,7 @@ typedef struct cgen_cpu_desc
     (CGEN_CPU_DESC, int opindex_, CGEN_FIELDS *fields_,
      CGEN_INSN_BYTES_PTR, bfd_vma pc_);
   int (*extract_operand)
-    (CGEN_CPU_DESC, int opindex_, CGEN_EXTRACT_INFO *, CGEN_INSN_INT,
+    (CGEN_CPU_DESC, int opindex_, CGEN_EXTRACT_INFO *, CGEN_INSN_LGUINT,
      CGEN_FIELDS *fields_, bfd_vma pc_);
   void (*print_operand)
     (CGEN_CPU_DESC, int opindex_, void * info_, CGEN_FIELDS * fields_,
@@ -1348,7 +1348,7 @@ typedef struct cgen_cpu_desc
   int (* dis_hash_p) (const CGEN_INSN *);
 
   /* Disassembler hash function.  */
-  unsigned int (* dis_hash) (const char *, CGEN_INSN_INT);
+  unsigned int (* dis_hash) (const char *, CGEN_INSN_LGUINT);
 
   /* Number of entries in disassembler hash table.  */
   unsigned int dis_hash_size;
@@ -1449,27 +1449,27 @@ extern int CGEN_SYM (get_mach) (const char *);
 /* Operand index computation.  */
 extern const CGEN_INSN * cgen_lookup_insn
   (CGEN_CPU_DESC, const CGEN_INSN * insn_,
-   CGEN_INSN_INT int_value_, unsigned char *bytes_value_,
+   CGEN_INSN_LGUINT int_value_, unsigned char *bytes_value_,
    int length_, CGEN_FIELDS *fields_, int alias_p_);
 extern void cgen_get_insn_operands
   (CGEN_CPU_DESC, const CGEN_INSN * insn_,
    const CGEN_FIELDS *fields_, int *indices_);
 extern const CGEN_INSN * cgen_lookup_get_insn_operands
   (CGEN_CPU_DESC, const CGEN_INSN *insn_,
-   CGEN_INSN_INT int_value_, unsigned char *bytes_value_,
+   CGEN_INSN_LGUINT int_value_, unsigned char *bytes_value_,
    int length_, int *indices_, CGEN_FIELDS *fields_);
 
 /* Cover fns to bfd_get/set.  */
 
-extern CGEN_INSN_INT cgen_get_insn_value
+extern CGEN_INSN_LGUINT cgen_get_insn_value
   (CGEN_CPU_DESC, unsigned char *, int, int);
 extern void cgen_put_insn_value
   (CGEN_CPU_DESC, unsigned char *, int, CGEN_INSN_LGUINT, int);
 
-extern CGEN_INSN_INT cgen_get_base_insn_value
+extern CGEN_INSN_LGUINT cgen_get_base_insn_value
   (CGEN_CPU_DESC, unsigned char *, int);
 extern void cgen_put_base_insn_value
-  (CGEN_CPU_DESC, unsigned char *, int, CGEN_INSN_INT);
+  (CGEN_CPU_DESC, unsigned char *, int, CGEN_INSN_LGUINT);
 
 /* Read in a cpu description file.
    ??? For future concerns, including adding instructions to the assembler/

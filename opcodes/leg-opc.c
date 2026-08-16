@@ -37,7 +37,7 @@ This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 static int asm_hash_insn_p        (const CGEN_INSN *);
 static unsigned int asm_hash_insn (const char *);
 static int dis_hash_insn_p        (const CGEN_INSN *);
-static unsigned int dis_hash_insn (const char *, CGEN_INSN_INT);
+static unsigned int dis_hash_insn (const char *, CGEN_INSN_LGUINT);
 
 /* Instruction formats.  */
 
@@ -193,7 +193,7 @@ asm_hash_insn (const char *mnem)
 
 static unsigned int
 dis_hash_insn (const char *buf ATTRIBUTE_UNUSED,
-		     CGEN_INSN_INT value ATTRIBUTE_UNUSED)
+		     CGEN_INSN_LGUINT value ATTRIBUTE_UNUSED)
 {
   return CGEN_DIS_HASH (buf, value);
 }

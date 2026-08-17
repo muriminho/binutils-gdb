@@ -279,7 +279,7 @@ const CGEN_OPERAND leg_cgen_operand_table[] =
     { 0, { &leg_cgen_ifld_table[LEG_F_UIMM] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* branch: branch offset */
-  { "branch", LEG_OPERAND_BRANCH, HW_H_UINT, 63, 32,
+  { "branch", LEG_OPERAND_BRANCH, HW_H_IADDR, 63, 32,
     { 0, { &leg_cgen_ifld_table[LEG_F_BRANCH] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* sentinel */

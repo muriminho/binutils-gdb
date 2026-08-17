@@ -125,7 +125,7 @@
 (dnop imm       "signed immediate"             () h-sint       f-imm)
 (dnop uimm      "unsigned immediate"           () h-uint       f-uimm)
 (dnop addr      "unsigned address"             () h-uint       f-uimm)
-(dnop branch    "branch offset"                () h-uint      f-branch)            
+(dnop branch    "branch offset"                () h-iaddr      f-branch)            
 
 ; Enumerations.
 

@@ -314,27 +314,16 @@ md_cgen_lookup_reloc (const CGEN_INSN *insn ATTRIBUTE_UNUSED,
 		      fixS *fixP ATTRIBUTE_UNUSED)
 {
 	(void) operand;
-  // switch (operand->type)
-  //   {
-  //   case LM32_OPERAND_GOT16:
-  //     return BFD_RELOC_LM32_16_GOT;
-  //   case LM32_OPERAND_GOTOFFHI16:
-  //     return BFD_RELOC_HI16_GOTOFF;
-  //   case LM32_OPERAND_GOTOFFLO16:
-  //     return BFD_RELOC_LO16_GOTOFF;
-  //   case LM32_OPERAND_GP16:
-  //     return BFD_RELOC_GPREL16;
-  //   case LM32_OPERAND_LO16:
-  //     return BFD_RELOC_LO16;
-  //   case LM32_OPERAND_HI16:
-  //     return BFD_RELOC_HI16;
-  //   case LM32_OPERAND_BRANCH:
-  //     return BFD_RELOC_LM32_BRANCH;
-  //   case LM32_OPERAND_CALL:
-  //     return BFD_RELOC_LM32_CALL;
-  //   default:
-  //     break;
-  //   }
+  switch (operand->type)
+    {
+    	case LEG_OPERAND_BRANCH:
+    		return BFD_RELOC_32;
+	break;
+    default:
+    	printf("Unhandled relocation type: %d\n", operand->type);
+    	abort();
+      break;
+    }
   return BFD_RELOC_NONE;
 }
 

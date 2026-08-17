@@ -97,7 +97,7 @@ leg_cgen_print_operand (CGEN_CPU_DESC cd,
       print_keyword (cd, info, & leg_cgen_opval_h_gr, fields->f_dest, 0);
       break;
     case LEG_OPERAND_BRANCH :
-      print_normal (cd, info, fields->f_branch, 0, pc, length);
+      print_address (cd, info, fields->f_branch, 0, pc, length);
       break;
     case LEG_OPERAND_DEST :
       print_keyword (cd, info, & leg_cgen_opval_h_gr, fields->f_dest, 0);

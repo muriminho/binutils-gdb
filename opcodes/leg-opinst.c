@@ -47,7 +47,7 @@ static const CGEN_OPINST sfmt_nop_ops[] ATTRIBUTE_UNUSED = {
 };
 
 static const CGEN_OPINST sfmt_jump_ops[] ATTRIBUTE_UNUSED = {
-  { INPUT, "branch", HW_H_UINT, CGEN_MODE_UINT, OP_ENT (BRANCH), 0, 0 },
+  { INPUT, "branch", HW_H_IADDR, CGEN_MODE_UDI, OP_ENT (BRANCH), 0, 0 },
   { OUTPUT, "pc", HW_H_PC, CGEN_MODE_UDI, 0, 0, 0 },
   { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
 };
@@ -135,7 +135,7 @@ static const CGEN_OPINST sfmt_jeqr_ops[] ATTRIBUTE_UNUSED = {
 };
 
 static const CGEN_OPINST sfmt_jeq_ops[] ATTRIBUTE_UNUSED = {
-  { INPUT, "branch", HW_H_UINT, CGEN_MODE_UINT, OP_ENT (BRANCH), 0, COND_REF },
+  { INPUT, "branch", HW_H_IADDR, CGEN_MODE_UDI, OP_ENT (BRANCH), 0, COND_REF },
   { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
   { INPUT, "src2", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC2), 0, 0 },
   { OUTPUT, "pc", HW_H_PC, CGEN_MODE_UDI, 0, 0, COND_REF },

@@ -88,7 +88,11 @@ leg_cgen_parse_operand (CGEN_CPU_DESC cd,
       errmsg = cgen_parse_keyword (cd, strp, & leg_cgen_opval_h_gr, & fields->f_dest);
       break;
     case LEG_OPERAND_BRANCH :
-      errmsg = cgen_parse_unsigned_integer (cd, strp, LEG_OPERAND_BRANCH, (unsigned long *) (& fields->f_branch));
+      {
+        bfd_vma value = 0;
+        errmsg = cgen_parse_address (cd, strp, LEG_OPERAND_BRANCH, 0, NULL,  & value);
+        fields->f_branch = value;
+      }
       break;
     case LEG_OPERAND_DEST :
       errmsg = cgen_parse_keyword (cd, strp, & leg_cgen_opval_h_gr, & fields->f_dest);

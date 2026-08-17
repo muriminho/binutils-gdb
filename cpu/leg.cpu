@@ -87,7 +87,7 @@
   
 (dnh h-csr "Control and status registers"
   ()
-  (register SI (32))
+  (register DI (64))
   (keyword "" (
                (IE 0) (IM 1) (IP 2) 
                (ICC 3) (DCC 4)
@@ -119,10 +119,12 @@
 ; Operands.
 
 (dnop dest      "destinatination register 0"   () h-gr         f-dest)
+(dnop addrg      "address register"            () h-gr         f-dest)
 (dnop src1      "source register 1"            () h-gr         f-src1)
 (dnop src2      "source register 2"            () h-gr         f-src2)
 (dnop imm       "signed immediate"             () h-sint       f-imm)
 (dnop uimm      "unsigned immediate"           () h-uint       f-uimm)
+(dnop addr      "unsigned address"             () h-uint       f-uimm)
 (dnop branch    "branch offset"                () h-uint      f-branch)            
 
 ; Enumerations.
@@ -133,7 +135,28 @@
         ("NOP"       1)
         ("EXIT"       2)
         ("JUMP"       3)
-        ("MOV"       4)
+        ("JUMPREG"       4)
+        ("MOV"       5)
+        ("MOVIMM"       6)
+        ("LOAD64" 7)
+        ("STORE64" 8)
+        ("LOAD32" 8)
+        ("STORE32" 9)
+        ("LOAD16" 10)
+        ("STORE16" 11)
+        ("LOAD8" 12)
+        ("STORE8" 13)
+        ("JEQ" 14)
+        ("JEQIMM" 15)
+        ("JLE" 16)
+        ("JLEU" 17)
+        ("JLER" 18)
+        ("JLEUR" 19)
+
+        ("JL" 20)
+        ("JLU" 21)
+        ("JLR" 22)
+        ("JLUR" 23)
   )
 )
  
@@ -161,9 +184,150 @@
         ()
 )
 
+(dni jumpreg "jump to a 32 bit offset from register" ()
+        "jumpr $dest"
+        (+ OP_JUMPREG dest (f-src1 0) (f-src2 0) (f-imm 0))
+        (set pc dest)
+        ()
+)
+
 (dni mov "mov to reg from reg" ()
-        "mov $dest,$src1"
+        "movr $dest,$src1"
         (+ OP_MOV dest src1 (f-src2 0) (f-imm 0))
         (set dest src1)
+        ()
+)
+
+(dni movimm "mov to reg from imm" ()
+        "mov $dest,$uimm"
+        (+ OP_MOVIMM dest (f-src1 0) (f-src2 0) uimm)
+        (set dest uimm)
+        ()
+)
+
+(dni load64 "mov 64 bit to reg from mem" ()
+        "ldrq $addrg,$src1"
+        (+ OP_LOAD64 addrg src1 (f-src2 0) (f-imm 0))
+        (set dest (mem DI src1))
+        ()
+)
+
+(dni store64 "mov 64 bit to mem from reg" ()
+        "strq $addrg,$src1"
+        (+ OP_STORE64 addrg src1 (f-src2 0) (f-imm 0))
+        (set (mem DI src1) dest)
+        ()
+)
+
+(dni load32 "mov 32 bit to reg from mem" ()
+        "ldrw $addrg,$src1"
+        (+ OP_LOAD32 addrg src1 (f-src2 0) (f-imm 0))
+        (set dest (mem SI src1))
+        ()
+)
+
+(dni store32 "mov 32 bit to mem from reg" ()
+        "strw $addrg,$src1"
+        (+ OP_STORE32 addrg src1 (f-src2 0) (f-imm 0))
+        (set (mem SI src1) dest)
+        ()
+)
+
+(dni load16 "mov 16 bit to reg from mem" ()
+        "ldrh $addrg,$src1"
+        (+ OP_LOAD16 addrg src1 (f-src2 0) (f-imm 0))
+        (set dest (mem HI src1))
+        ()
+)
+
+(dni store16 "mov 16 bit to mem from reg" ()
+        "strh $addrg,$src1"
+        (+ OP_STORE16 addrg src1 (f-src2 0) (f-imm 0))
+        (set (mem HI src1) dest)
+        ()
+)
+
+(dni load8 "mov 8 bit to reg from mem" ()
+        "ldrb $addrg,$src1"
+        (+ OP_LOAD8 addrg src1 (f-src2 0) (f-imm 0))
+        (set dest (mem QI src1))
+        ()
+)
+
+(dni store8 "mov 8 bit to mem from reg" ()
+        "strb $addrg,$src1"
+        (+ OP_STORE8 addrg src1 (f-src2 0) (f-imm 0))
+        (set (mem QI src1) dest)
+        ()
+)
+
+(dni jeqr "jump is equal regs" ()
+        "jeqr $src1,$src2,$addrg"
+        (+ OP_JEQ addrg src1 src2 (f-imm 0))
+        (if (eq src1 src2) (set pc addrg))
+        ()
+)
+
+(dni jeq "jump if equal imm" ()
+        "jeq $src1,$src2,$branch"
+        (+ OP_JEQIMM (f-dest 0) src1 src2 branch)
+        (if (eq src1 src2) (set pc branch))
+        ()
+)
+
+(dni jler "jle regs" ()
+        "jler $src1,$src2,$addrg"
+        (+ OP_JLER addrg src1 src2 (f-imm 0))
+        (if (le src1 src2) (set pc addrg))
+        ()
+)
+
+(dni jleur "jleu regs" ()
+        "jleur $src1,$src2,$addrg"
+        (+ OP_JLEUR addrg src1 src2 (f-imm 0))
+        (if (leu src1 src2) (set pc addrg))
+        ()
+)
+
+(dni jle "jle imm" ()
+        "jle $src1,$src2,$branch"
+        (+ OP_JLE (f-dest 0) src1 src2 branch)
+        (if (le src1 src2) (set pc branch))
+        ()
+)
+
+(dni jleu "jleu imm" ()
+        "jleu $src1,$src2,$branch"
+        (+ OP_JLEU (f-dest 0) src1 src2 branch)
+        (if (leu src1 src2) (set pc branch))
+        ()
+)
+
+
+(dni jlr "jl regs" ()
+        "jlr $src1,$src2,$addrg"
+        (+ OP_JLR addrg src1 src2 (f-imm 0))
+        (if (lt src1 src2) (set pc addrg))
+        ()
+)
+
+(dni jlur "jlu regs" ()
+        "jlur $src1,$src2,$addrg"
+        (+ OP_JLUR addrg src1 src2 (f-imm 0))
+        (if (ltu src1 src2) (set pc addrg))
+        ()
+)
+
+(dni jl "jl imm" ()
+        "jl $src1,$src2,$branch"
+        (+ OP_JL (f-dest 0) src1 src2 branch)
+        (if (lt src1 src2) (set pc branch))
+        ()
+)
+
+(dni jlu "jlu imm" ()
+        "jlu $src1,$src2,$branch"
+        (+ OP_JLU (f-dest 0) src1 src2 branch)
+        (if (ltu src1 src2) (set pc branch))
         ()
 )

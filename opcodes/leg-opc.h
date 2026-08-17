@@ -42,14 +42,19 @@ extern "C" {
 /* Enum declaration for leg instruction types.  */
 typedef enum cgen_insn_type {
   LEG_INSN_INVALID, LEG_INSN_NOP, LEG_INSN_EXIT, LEG_INSN_JUMP
- , LEG_INSN_MOV
+ , LEG_INSN_JUMPREG, LEG_INSN_MOV, LEG_INSN_MOVIMM, LEG_INSN_LOAD64
+ , LEG_INSN_STORE64, LEG_INSN_LOAD32, LEG_INSN_STORE32, LEG_INSN_LOAD16
+ , LEG_INSN_STORE16, LEG_INSN_LOAD8, LEG_INSN_STORE8, LEG_INSN_JEQR
+ , LEG_INSN_JEQ, LEG_INSN_JLER, LEG_INSN_JLEUR, LEG_INSN_JLE
+ , LEG_INSN_JLEU, LEG_INSN_JLR, LEG_INSN_JLUR, LEG_INSN_JL
+ , LEG_INSN_JLU
 } CGEN_INSN_TYPE;
 
 /* Index of `invalid' insn place holder.  */
 #define CGEN_INSN_INVALID LEG_INSN_INVALID
 
 /* Total number of insns in table.  */
-#define MAX_INSNS ((int) LEG_INSN_MOV + 1)
+#define MAX_INSNS ((int) LEG_INSN_JLU + 1)
 
 /* This struct records data prior to insertion or after extraction.  */
 struct cgen_fields

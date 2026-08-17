@@ -254,6 +254,10 @@ const CGEN_OPERAND leg_cgen_operand_table[] =
   { "dest", LEG_OPERAND_DEST, HW_H_GR, 15, 8,
     { 0, { &leg_cgen_ifld_table[LEG_F_DEST] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+/* addrg: address register */
+  { "addrg", LEG_OPERAND_ADDRG, HW_H_GR, 15, 8,
+    { 0, { &leg_cgen_ifld_table[LEG_F_DEST] } },
+    { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* src1: source register 1 */
   { "src1", LEG_OPERAND_SRC1, HW_H_GR, 23, 8,
     { 0, { &leg_cgen_ifld_table[LEG_F_SRC1] } },
@@ -268,6 +272,10 @@ const CGEN_OPERAND leg_cgen_operand_table[] =
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* uimm: unsigned immediate */
   { "uimm", LEG_OPERAND_UIMM, HW_H_UINT, 63, 32,
+    { 0, { &leg_cgen_ifld_table[LEG_F_UIMM] } },
+    { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+/* addr: unsigned address */
+  { "addr", LEG_OPERAND_ADDR, HW_H_UINT, 63, 32,
     { 0, { &leg_cgen_ifld_table[LEG_F_UIMM] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* branch: branch offset */
@@ -309,10 +317,110 @@ static const CGEN_IBASE leg_cgen_insn_table[MAX_INSNS] =
     LEG_INSN_JUMP, "jump", "jump", 64,
     { 0|A(UNCOND_CTI), { { { (1<<MACH_BASE), 0 } } } }
   },
-/* mov $dest,$src1 */
+/* jumpr $dest */
   {
-    LEG_INSN_MOV, "mov", "mov", 64,
+    LEG_INSN_JUMPREG, "jumpreg", "jumpr", 64,
+    { 0|A(UNCOND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* movr $dest,$src1 */
+  {
+    LEG_INSN_MOV, "mov", "movr", 64,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* mov $dest,$uimm */
+  {
+    LEG_INSN_MOVIMM, "movimm", "mov", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* ldrq $addrg,$src1 */
+  {
+    LEG_INSN_LOAD64, "load64", "ldrq", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* strq $addrg,$src1 */
+  {
+    LEG_INSN_STORE64, "store64", "strq", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* ldrw $addrg,$src1 */
+  {
+    LEG_INSN_LOAD32, "load32", "ldrw", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* strw $addrg,$src1 */
+  {
+    LEG_INSN_STORE32, "store32", "strw", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* ldrh $addrg,$src1 */
+  {
+    LEG_INSN_LOAD16, "load16", "ldrh", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* strh $addrg,$src1 */
+  {
+    LEG_INSN_STORE16, "store16", "strh", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* ldrb $addrg,$src1 */
+  {
+    LEG_INSN_LOAD8, "load8", "ldrb", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* strb $addrg,$src1 */
+  {
+    LEG_INSN_STORE8, "store8", "strb", 64,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jeqr $src1,$src2,$addrg */
+  {
+    LEG_INSN_JEQR, "jeqr", "jeqr", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jeq $src1,$src2,$branch */
+  {
+    LEG_INSN_JEQ, "jeq", "jeq", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jler $src1,$src2,$addrg */
+  {
+    LEG_INSN_JLER, "jler", "jler", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jleur $src1,$src2,$addrg */
+  {
+    LEG_INSN_JLEUR, "jleur", "jleur", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jle $src1,$src2,$branch */
+  {
+    LEG_INSN_JLE, "jle", "jle", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jleu $src1,$src2,$branch */
+  {
+    LEG_INSN_JLEU, "jleu", "jleu", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jlr $src1,$src2,$addrg */
+  {
+    LEG_INSN_JLR, "jlr", "jlr", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jlur $src1,$src2,$addrg */
+  {
+    LEG_INSN_JLUR, "jlur", "jlur", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jl $src1,$src2,$branch */
+  {
+    LEG_INSN_JL, "jl", "jl", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* jlu $src1,$src2,$branch */
+  {
+    LEG_INSN_JLU, "jlu", "jlu", 64,
+    { 0|A(COND_CTI), { { { (1<<MACH_BASE), 0 } } } }
   },
 };
 

@@ -50,7 +50,7 @@ extern "C" {
 #define CGEN_INT_INSN_P 0
 
 /* Maximum number of syntax elements in an instruction.  */
-#define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 9
+#define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 13
 
 /* CGEN_MNEMONIC_OPERANDS is defined if mnemonics have operands.
    e.g. In "b,a foo" the ",a" is an operand.  If mnemonics have operands
@@ -64,7 +64,12 @@ extern "C" {
 
 /* Enum declaration for opcodes.  */
 typedef enum opcodes {
-  OP_NOP = 1, OP_EXIT = 2, OP_JUMP = 3, OP_MOV = 4
+  OP_NOP = 1, OP_EXIT = 2, OP_JUMP = 3, OP_JUMPREG = 4
+ , OP_MOV = 5, OP_MOVIMM = 6, OP_LOAD64 = 7, OP_STORE64 = 8
+ , OP_LOAD32 = 8, OP_STORE32 = 9, OP_LOAD16 = 10, OP_STORE16 = 11
+ , OP_LOAD8 = 12, OP_STORE8 = 13, OP_JEQ = 14, OP_JEQIMM = 15
+ , OP_JLE = 16, OP_JLEU = 17, OP_JLER = 18, OP_JLEUR = 19
+ , OP_JL = 20, OP_JLU = 21, OP_JLR = 22, OP_JLUR = 23
 } OPCODES;
 
 /* Attributes.  */
@@ -167,15 +172,16 @@ typedef enum cgen_operand_attr {
 
 /* Enum declaration for leg operand types.  */
 typedef enum cgen_operand_type {
-  LEG_OPERAND_PC, LEG_OPERAND_DEST, LEG_OPERAND_SRC1, LEG_OPERAND_SRC2
- , LEG_OPERAND_IMM, LEG_OPERAND_UIMM, LEG_OPERAND_BRANCH, LEG_OPERAND_MAX
+  LEG_OPERAND_PC, LEG_OPERAND_DEST, LEG_OPERAND_ADDRG, LEG_OPERAND_SRC1
+ , LEG_OPERAND_SRC2, LEG_OPERAND_IMM, LEG_OPERAND_UIMM, LEG_OPERAND_ADDR
+ , LEG_OPERAND_BRANCH, LEG_OPERAND_MAX
 } CGEN_OPERAND_TYPE;
 
 /* Number of operands types.  */
-#define MAX_OPERANDS 7
+#define MAX_OPERANDS 9
 
 /* Maximum number of operands referenced by any insn.  */
-#define MAX_OPERAND_INSTANCES 2
+#define MAX_OPERAND_INSTANCES 4
 
 /* Insn attribute indices.  */
 

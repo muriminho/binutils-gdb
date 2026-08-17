@@ -52,9 +52,93 @@ static const CGEN_OPINST sfmt_jump_ops[] ATTRIBUTE_UNUSED = {
   { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
 };
 
+static const CGEN_OPINST sfmt_jumpreg_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { OUTPUT, "pc", HW_H_PC, CGEN_MODE_UDI, 0, 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
 static const CGEN_OPINST sfmt_mov_ops[] ATTRIBUTE_UNUSED = {
   { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
   { OUTPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_movimm_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "uimm", HW_H_UINT, CGEN_MODE_UINT, OP_ENT (UIMM), 0, 0 },
+  { OUTPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_load64_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "h_memory_DI_src1", HW_H_MEMORY, CGEN_MODE_DI, 0, 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_store64_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "h_memory_DI_src1", HW_H_MEMORY, CGEN_MODE_DI, 0, 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_load32_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "h_memory_SI_src1", HW_H_MEMORY, CGEN_MODE_SI, 0, 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_store32_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "h_memory_SI_src1", HW_H_MEMORY, CGEN_MODE_SI, 0, 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_load16_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "h_memory_HI_src1", HW_H_MEMORY, CGEN_MODE_HI, 0, 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_store16_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "h_memory_HI_src1", HW_H_MEMORY, CGEN_MODE_HI, 0, 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_load8_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "h_memory_QI_src1", HW_H_MEMORY, CGEN_MODE_QI, 0, 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_store8_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "dest", HW_H_GR, CGEN_MODE_DI, OP_ENT (DEST), 0, 0 },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { OUTPUT, "h_memory_QI_src1", HW_H_MEMORY, CGEN_MODE_QI, 0, 0, 0 },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_jeqr_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "addrg", HW_H_GR, CGEN_MODE_DI, OP_ENT (ADDRG), 0, COND_REF },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { INPUT, "src2", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC2), 0, 0 },
+  { OUTPUT, "pc", HW_H_PC, CGEN_MODE_UDI, 0, 0, COND_REF },
+  { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
+};
+
+static const CGEN_OPINST sfmt_jeq_ops[] ATTRIBUTE_UNUSED = {
+  { INPUT, "branch", HW_H_UINT, CGEN_MODE_UINT, OP_ENT (BRANCH), 0, COND_REF },
+  { INPUT, "src1", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC1), 0, 0 },
+  { INPUT, "src2", HW_H_GR, CGEN_MODE_DI, OP_ENT (SRC2), 0, 0 },
+  { OUTPUT, "pc", HW_H_PC, CGEN_MODE_UDI, 0, 0, COND_REF },
   { END, (const char *)0, (enum cgen_hw_type)0, (enum cgen_mode)0, (enum cgen_operand_type)0, 0, 0 }
 };
 
@@ -71,7 +155,27 @@ static const CGEN_OPINST *leg_cgen_opinst_table[MAX_INSNS] = {
   & sfmt_nop_ops[0],
   & sfmt_nop_ops[0],
   & sfmt_jump_ops[0],
+  & sfmt_jumpreg_ops[0],
   & sfmt_mov_ops[0],
+  & sfmt_movimm_ops[0],
+  & sfmt_load64_ops[0],
+  & sfmt_store64_ops[0],
+  & sfmt_load32_ops[0],
+  & sfmt_store32_ops[0],
+  & sfmt_load16_ops[0],
+  & sfmt_store16_ops[0],
+  & sfmt_load8_ops[0],
+  & sfmt_store8_ops[0],
+  & sfmt_jeqr_ops[0],
+  & sfmt_jeq_ops[0],
+  & sfmt_jeqr_ops[0],
+  & sfmt_jeqr_ops[0],
+  & sfmt_jeq_ops[0],
+  & sfmt_jeq_ops[0],
+  & sfmt_jeqr_ops[0],
+  & sfmt_jeqr_ops[0],
+  & sfmt_jeq_ops[0],
+  & sfmt_jeq_ops[0],
 };
 
 /* Function to call before using the operand instance table.  */

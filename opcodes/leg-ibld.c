@@ -582,6 +582,12 @@ leg_cgen_insert_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      errmsg = insert_normal (cd, fields->f_uimm, 0, 0, 63, 32, 64, total_length, buffer);
+      break;
+    case LEG_OPERAND_ADDRG :
+      errmsg = insert_normal (cd, fields->f_dest, 0, 0, 15, 8, 64, total_length, buffer);
+      break;
     case LEG_OPERAND_BRANCH :
       errmsg = insert_normal (cd, fields->f_branch, 0, 0, 63, 32, 64, total_length, buffer);
       break;
@@ -644,6 +650,12 @@ leg_cgen_extract_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 63, 32, 64, total_length, pc, & fields->f_uimm);
+      break;
+    case LEG_OPERAND_ADDRG :
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 15, 8, 64, total_length, pc, & fields->f_dest);
+      break;
     case LEG_OPERAND_BRANCH :
       length = extract_normal (cd, ex_info, insn_value, 0, 0, 63, 32, 64, total_length, pc, & fields->f_branch);
       break;
@@ -701,6 +713,12 @@ leg_cgen_get_int_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      value = fields->f_uimm;
+      break;
+    case LEG_OPERAND_ADDRG :
+      value = fields->f_dest;
+      break;
     case LEG_OPERAND_BRANCH :
       value = fields->f_branch;
       break;
@@ -740,6 +758,12 @@ leg_cgen_get_vma_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      value = fields->f_uimm;
+      break;
+    case LEG_OPERAND_ADDRG :
+      value = fields->f_dest;
+      break;
     case LEG_OPERAND_BRANCH :
       value = fields->f_branch;
       break;
@@ -786,6 +810,12 @@ leg_cgen_set_int_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 {
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      fields->f_uimm = value;
+      break;
+    case LEG_OPERAND_ADDRG :
+      fields->f_dest = value;
+      break;
     case LEG_OPERAND_BRANCH :
       fields->f_branch = value;
       break;
@@ -822,6 +852,12 @@ leg_cgen_set_vma_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 {
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      fields->f_uimm = value;
+      break;
+    case LEG_OPERAND_ADDRG :
+      fields->f_dest = value;
+      break;
     case LEG_OPERAND_BRANCH :
       fields->f_branch = value;
       break;

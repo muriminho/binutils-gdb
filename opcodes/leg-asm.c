@@ -81,6 +81,12 @@ leg_cgen_parse_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      errmsg = cgen_parse_unsigned_integer (cd, strp, LEG_OPERAND_ADDR, (unsigned long *) (& fields->f_uimm));
+      break;
+    case LEG_OPERAND_ADDRG :
+      errmsg = cgen_parse_keyword (cd, strp, & leg_cgen_opval_h_gr, & fields->f_dest);
+      break;
     case LEG_OPERAND_BRANCH :
       errmsg = cgen_parse_unsigned_integer (cd, strp, LEG_OPERAND_BRANCH, (unsigned long *) (& fields->f_branch));
       break;

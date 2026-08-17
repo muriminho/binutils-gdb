@@ -90,6 +90,12 @@ leg_cgen_print_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case LEG_OPERAND_ADDR :
+      print_normal (cd, info, fields->f_uimm, 0, pc, length);
+      break;
+    case LEG_OPERAND_ADDRG :
+      print_keyword (cd, info, & leg_cgen_opval_h_gr, fields->f_dest, 0);
+      break;
     case LEG_OPERAND_BRANCH :
       print_normal (cd, info, fields->f_branch, 0, pc, length);
       break;

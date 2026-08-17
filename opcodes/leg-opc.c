@@ -54,8 +54,28 @@ static const CGEN_IFMT ifmt_jump ATTRIBUTE_UNUSED = {
   64, 64, 0xffffffff, { { F (F_BRANCH) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
 };
 
+static const CGEN_IFMT ifmt_jumpreg ATTRIBUTE_UNUSED = {
+  64, 64, 0xffffffffffff00ff, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+};
+
 static const CGEN_IFMT ifmt_mov ATTRIBUTE_UNUSED = {
   64, 64, 0xffffffffff0000ff, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+};
+
+static const CGEN_IFMT ifmt_movimm ATTRIBUTE_UNUSED = {
+  64, 64, 0xffff00ff, { { F (F_UIMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+};
+
+static const CGEN_IFMT ifmt_load64 ATTRIBUTE_UNUSED = {
+  64, 64, 0xffffffffff0000ff, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+};
+
+static const CGEN_IFMT ifmt_jeqr ATTRIBUTE_UNUSED = {
+  64, 64, 0xffffffff000000ff, { { F (F_IMM) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
+};
+
+static const CGEN_IFMT ifmt_jeq ATTRIBUTE_UNUSED = {
+  64, 64, 0xffff, { { F (F_BRANCH) }, { F (F_SRC2) }, { F (F_SRC1) }, { F (F_DEST) }, { F (F_OPCODE) }, { 0 } }
 };
 
 #undef F
@@ -91,11 +111,131 @@ static const CGEN_OPCODE leg_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (BRANCH), 0 } },
     & ifmt_jump, { 0x3 }
   },
-/* mov $dest,$src1 */
+/* jumpr $dest */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (DEST), 0 } },
+    & ifmt_jumpreg, { 0x4 }
+  },
+/* movr $dest,$src1 */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (DEST), ',', OP (SRC1), 0 } },
-    & ifmt_mov, { 0x4 }
+    & ifmt_mov, { 0x5 }
+  },
+/* mov $dest,$uimm */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (DEST), ',', OP (UIMM), 0 } },
+    & ifmt_movimm, { 0x6 }
+  },
+/* ldrq $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0x7 }
+  },
+/* strq $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0x8 }
+  },
+/* ldrw $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0x8 }
+  },
+/* strw $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0x9 }
+  },
+/* ldrh $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0xa }
+  },
+/* strh $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0xb }
+  },
+/* ldrb $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0xc }
+  },
+/* strb $addrg,$src1 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (ADDRG), ',', OP (SRC1), 0 } },
+    & ifmt_load64, { 0xd }
+  },
+/* jeqr $src1,$src2,$addrg */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (ADDRG), 0 } },
+    & ifmt_jeqr, { 0xe }
+  },
+/* jeq $src1,$src2,$branch */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (BRANCH), 0 } },
+    & ifmt_jeq, { 0xf }
+  },
+/* jler $src1,$src2,$addrg */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (ADDRG), 0 } },
+    & ifmt_jeqr, { 0x12 }
+  },
+/* jleur $src1,$src2,$addrg */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (ADDRG), 0 } },
+    & ifmt_jeqr, { 0x13 }
+  },
+/* jle $src1,$src2,$branch */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (BRANCH), 0 } },
+    & ifmt_jeq, { 0x10 }
+  },
+/* jleu $src1,$src2,$branch */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (BRANCH), 0 } },
+    & ifmt_jeq, { 0x11 }
+  },
+/* jlr $src1,$src2,$addrg */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (ADDRG), 0 } },
+    & ifmt_jeqr, { 0x16 }
+  },
+/* jlur $src1,$src2,$addrg */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (ADDRG), 0 } },
+    & ifmt_jeqr, { 0x17 }
+  },
+/* jl $src1,$src2,$branch */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (BRANCH), 0 } },
+    & ifmt_jeq, { 0x14 }
+  },
+/* jlu $src1,$src2,$branch */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (SRC1), ',', OP (SRC2), ',', OP (BRANCH), 0 } },
+    & ifmt_jeq, { 0x15 }
   },
 };
 

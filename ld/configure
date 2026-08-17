@@ -19501,8 +19501,9 @@ else
   EMUL_EXTRA_OFILES=$all_emul_extras
 fi
 
-
-
+:
+echo "DEBUG: targ_emul=$targ_emul"
+echo "DEBUG: targ_extra_emuls=$targ_extra_emuls"
 
 EMULATION_LIBPATH=$all_libpath
 

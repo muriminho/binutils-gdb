@@ -238,6 +238,7 @@ ALL_EMULATION_SOURCES = \
 	eelf32ip2k.c \
 	eelf32iq10.c \
 	eelf32iq2000.c \
+	eelf32leg.c \
 	eelf32lm32.c \
 	eelf32lm32fd.c \
 	eelf32lppc.c \

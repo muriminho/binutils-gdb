@@ -449,6 +449,8 @@ lm32-*-*linux*)		targ_emul=elf32lm32fd
 lm32-*-*)		targ_emul=elf32lm32
 			targ_extra_emuls="elf32lm32fd"
 			;;
+leg-*-*)		targ_emul=elf32leg
+			;;
 kvx-*-linux*)		targ_emul=elf64kvx_linux
 			targ_extra_emuls="elf64kvx"
 			;;
